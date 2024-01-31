@@ -389,6 +389,32 @@ def extract_program_type(name):
     return program_type, updated_name
 
 
+def extract_building(room_str):
+    # If the room string starts with 'ZZ ', remove it
+    if room_str.startswith("ZZ "):
+        room_str = room_str[3:]
+    # Extract the building code (the first two characters)
+    building_code = room_str[:2]
+    return building_code
+
+# Apply the function to the 'room' column to create a new 'building' column
+data['building'] = data['room'].apply(extract_building)
+
+# Show the result
+print(data[['room', 'building']])
+
+unique_buildings = data['building'].unique()
+
+# Create a new DataFrame with unique buildings
+distinct_buildings = pd.DataFrame(unique_buildings, columns=['building'])
+
+# Add a placeholder column for the location
+distinct_buildings['location'] = 'Placeholder for location'
+distinct_buildings.to_csv('distinct_buildings.csv', index=False)
+
+
+
+
 # Apply the function to the 'Name' column
 programs[['program_type', 'name']] = programs.apply(lambda row: pd.Series(extract_program_type(row['Name'])), axis=1)
 programs = programs.drop(columns=['Name', 'Unnamed: 2'])
@@ -431,8 +457,8 @@ new_row = {
 programs = pd.concat([programs, pd.DataFrame([new_row])], ignore_index=True)
 
 
-print(programs.head())
-print(programs.shape[0])
+# print(programs.head())
+# print(programs.shape[0])
 driver = 'postgresql'
 username = 'dab_ds23241a_123'
 dbname = username  # it is the same as the username
@@ -449,14 +475,13 @@ def clean_data(text):
     else:
         return text
 
-
-# Clean the data in the DataFrame
+# # Clean the data in the DataFrame
 all_courses_with_program['course_name'] = all_courses_with_program['course_name'].apply(clean_data)
-#
-# # Insert data from DataFrame into the 'Courses' table in the database
+# #
+# # # Insert data from DataFrame into the 'Courses' table in the database
 combined_teachers.to_sql('teacher', con=engine, schema='timetables', if_exists='append', index=False, method='multi')
 programs.to_sql('program', con=engine, schema='timetables', if_exists='append', index=False, method='multi')
-#
+# #
 all_courses_with_program.to_sql('courses', con=engine, schema='timetables', if_exists='append', index=False,
                                  method='multi')
 # Close the connection if you're done with it
