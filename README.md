@@ -3,7 +3,7 @@
 **Course:** Data Science (Edition: 2023-1B)
 **Authors:** Boris Belchev (s2388952), David Galati (s2539829)
 
-[FullReport](./Group28_report.pdf)
+## [FullReport](./Group28_report.pdf)
 
 ## 1. Project Motivation
 
