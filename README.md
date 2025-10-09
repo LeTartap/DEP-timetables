@@ -5,6 +5,8 @@
 
 ## [FullReport](./Group28_report.pdf)
 
+![Map of the University and Activities per building](./TimeTablesMap.png)
+
 ## 1. Project Motivation
 
 The efficient structuring of academic timetables is pivotal in shaping the educational experience within universities. This project explores the timetables of the University of Twente from 2013 to 2017, aiming to uncover potential flaws and irregularities that could impact the effectiveness of student and teacher schedules.
